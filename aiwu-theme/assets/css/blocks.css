@@ -1,0 +1,491 @@
+/**
+ * AIWU Block Styles
+ *
+ * Styles for Gutenberg blocks and Block Patterns.
+ */
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+
+.aiwu-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Animated Grid Background */
+.aiwu-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 107, 59, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 107, 59, 0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+[data-theme="light"] .aiwu-hero::before {
+    opacity: 0.5;
+}
+
+.aiwu-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hero Badge */
+.aiwu-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(to right, rgba(255, 107, 59, 0.1), rgba(255, 107, 59, 0.05));
+    border: 1px solid rgba(255, 107, 59, 0.2);
+    border-radius: 9999px;
+    backdrop-filter: blur(8px);
+}
+
+.aiwu-hero__badge p {
+    margin: 0;
+    color: var(--aiwu-text-secondary);
+}
+
+/* Hero Title */
+.aiwu-hero__title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+}
+
+/* Gradient Text */
+.aiwu-gradient-text {
+    background: linear-gradient(to right, var(--aiwu-accent), var(--aiwu-accent-light), var(--aiwu-accent-lighter));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Hero Subtitle */
+.aiwu-hero__subtitle {
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--aiwu-text-secondary);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.wp-block-button__link {
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    transition: all 150ms;
+}
+
+.aiwu-btn-gradient .wp-block-button__link {
+    background: linear-gradient(to right, var(--aiwu-accent), var(--aiwu-accent-light));
+    box-shadow: var(--aiwu-glow);
+}
+
+.aiwu-btn-gradient .wp-block-button__link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px rgba(255, 107, 59, 0.5);
+}
+
+.is-style-outline .wp-block-button__link {
+    background: transparent;
+    border: 1px solid var(--aiwu-border);
+    color: var(--aiwu-text);
+}
+
+.is-style-outline .wp-block-button__link:hover {
+    background: var(--aiwu-hover-bg);
+}
+
+/* ==========================================================================
+   Feature Cards
+   ========================================================================== */
+
+.aiwu-feature-card {
+    background: var(--aiwu-bg-surface);
+    border: 1px solid var(--aiwu-border);
+    border-radius: var(--aiwu-radius-lg);
+    transition: all var(--aiwu-transition);
+}
+
+.aiwu-feature-card:hover {
+    border-color: rgba(255, 107, 59, 0.3);
+    transform: translateY(-2px);
+}
+
+.aiwu-feature-card h3 {
+    color: var(--aiwu-text);
+    margin-bottom: 0.5rem;
+}
+
+.aiwu-feature-card p {
+    color: var(--aiwu-text-secondary);
+    margin: 0;
+}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+
+.aiwu-section {
+    position: relative;
+}
+
+.aiwu-section h2 {
+    color: var(--aiwu-text);
+}
+
+.aiwu-section p {
+    color: var(--aiwu-text-secondary);
+}
+
+/* CTA Section */
+.aiwu-cta-section {
+    background: var(--aiwu-bg-surface);
+    border-top: 1px solid var(--aiwu-border);
+    border-bottom: 1px solid var(--aiwu-border);
+}
+
+/* ==========================================================================
+   Images
+   ========================================================================== */
+
+.aiwu-image-rounded img {
+    border-radius: var(--aiwu-radius-lg);
+}
+
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+
+.wp-block-heading {
+    color: var(--aiwu-text);
+}
+
+/* ==========================================================================
+   Paragraphs
+   ========================================================================== */
+
+.wp-block-paragraph {
+    color: var(--aiwu-text-secondary);
+}
+
+/* ==========================================================================
+   Columns
+   ========================================================================== */
+
+.wp-block-columns {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Wide & Full Width
+   ========================================================================== */
+
+.alignwide {
+    max-width: var(--aiwu-container-max);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignfull {
+    width: 100%;
+    max-width: none;
+}
+
+/* ==========================================================================
+   Blog Post Styles
+   ========================================================================== */
+
+.aiwu-post-card {
+    background: var(--aiwu-bg-surface);
+    border: 1px solid var(--aiwu-border);
+    border-radius: var(--aiwu-radius-lg);
+    overflow: hidden;
+    transition: all var(--aiwu-transition);
+}
+
+.aiwu-post-card:hover {
+    border-color: rgba(255, 107, 59, 0.3);
+    transform: translateY(-2px);
+}
+
+.aiwu-post-card__image {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.aiwu-post-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--aiwu-transition);
+}
+
+.aiwu-post-card:hover .aiwu-post-card__image img {
+    transform: scale(1.05);
+}
+
+.aiwu-post-card__content {
+    padding: 1.5rem;
+}
+
+.aiwu-post-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--aiwu-text);
+    margin: 0 0 0.5rem;
+}
+
+.aiwu-post-card__title a {
+    color: inherit;
+}
+
+.aiwu-post-card__title a:hover {
+    color: var(--aiwu-accent);
+}
+
+.aiwu-post-card__excerpt {
+    color: var(--aiwu-text-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.aiwu-post-card__meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--aiwu-text-muted);
+}
+
+/* ==========================================================================
+   Single Post
+   ========================================================================== */
+
+.aiwu-single-post {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.aiwu-single-post__header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.aiwu-single-post__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.aiwu-single-post__meta {
+    color: var(--aiwu-text-muted);
+    font-size: 0.875rem;
+}
+
+.aiwu-single-post__content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+}
+
+.aiwu-single-post__content h2,
+.aiwu-single-post__content h3,
+.aiwu-single-post__content h4 {
+    color: var(--aiwu-text);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.aiwu-single-post__content p {
+    margin-bottom: 1.5rem;
+}
+
+.aiwu-single-post__content a {
+    color: var(--aiwu-accent);
+}
+
+.aiwu-single-post__content a:hover {
+    text-decoration: underline;
+}
+
+.aiwu-single-post__content img {
+    border-radius: var(--aiwu-radius);
+    margin: 2rem 0;
+}
+
+.aiwu-single-post__content code {
+    background: var(--aiwu-bg-surface);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+.aiwu-single-post__content pre {
+    background: var(--aiwu-bg-surface);
+    padding: 1.5rem;
+    border-radius: var(--aiwu-radius);
+    overflow-x: auto;
+}
+
+.aiwu-single-post__content pre code {
+    background: none;
+    padding: 0;
+}
+
+.aiwu-single-post__content blockquote {
+    border-left: 3px solid var(--aiwu-accent);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--aiwu-text-secondary);
+}
+
+.aiwu-single-post__content ul,
+.aiwu-single-post__content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.aiwu-single-post__content li {
+    margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   Archive / Blog Listing
+   ========================================================================== */
+
+.aiwu-archive {
+    padding: 2rem 1.5rem 4rem;
+}
+
+.aiwu-archive__container {
+    max-width: var(--aiwu-container-max);
+    margin: 0 auto;
+}
+
+.aiwu-archive__header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.aiwu-archive__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--aiwu-text);
+    margin: 0 0 0.5rem;
+}
+
+.aiwu-archive__desc {
+    color: var(--aiwu-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.aiwu-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.aiwu-pagination {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.aiwu-pagination .nav-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.aiwu-pagination a,
+.aiwu-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    background: var(--aiwu-bg-surface);
+    border: 1px solid var(--aiwu-border);
+    border-radius: var(--aiwu-radius);
+    color: var(--aiwu-text);
+    font-size: 0.875rem;
+    transition: all 150ms;
+}
+
+.aiwu-pagination a:hover {
+    border-color: var(--aiwu-accent);
+    color: var(--aiwu-accent);
+}
+
+.aiwu-pagination .current {
+    background: var(--aiwu-accent);
+    border-color: var(--aiwu-accent);
+    color: #ffffff;
+}
+
+.aiwu-no-posts {
+    text-align: center;
+    color: var(--aiwu-text-muted);
+    padding: 4rem 0;
+}
+
+/* Tags */
+.aiwu-single-post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--aiwu-border);
+}
+
+.aiwu-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--aiwu-bg-surface);
+    border: 1px solid var(--aiwu-border);
+    border-radius: var(--aiwu-radius-full);
+    font-size: 0.75rem;
+    color: var(--aiwu-text-secondary);
+    transition: all 150ms;
+}
+
+.aiwu-tag:hover {
+    border-color: var(--aiwu-accent);
+    color: var(--aiwu-accent);
+}
+
+/* Thumbnail */
+.aiwu-single-post__thumbnail {
+    margin: 0 0 2rem;
+}
+
+.aiwu-single-post__thumbnail img {
+    border-radius: var(--aiwu-radius-lg);
+    width: 100%;
+}

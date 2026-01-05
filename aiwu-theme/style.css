@@ -3,7 +3,7 @@ Theme Name: AIWU Theme
 Theme URI: https://aiwu.dev
 Author: AIWU Team
 Author URI: https://aiwu.dev
-Description: A modern, fast, SEO-friendly WordPress theme for AIWU - AI WordPress Automation Plugin. Features dark/light theme toggle, responsive design, and smooth animations.
+Description: A modern, fast, SEO-friendly WordPress theme for AIWU - AI WordPress Automation Plugin. Features dark/light theme toggle, Block Patterns, and responsive design.
 Version: 1.0.0
 Requires at least: 6.0
 Tested up to: 6.4
@@ -11,7 +11,7 @@ Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: aiwu
-Tags: dark-mode, light-mode, custom-colors, one-column, responsive-layout, accessibility-ready
+Tags: block-patterns, block-styles, full-site-editing, wide-blocks
 */
 
 /* ==========================================================================
@@ -29,58 +29,38 @@ Tags: dark-mode, light-mode, custom-colors, one-column, responsive-layout, acces
     /* Dark Theme (default) */
     --aiwu-bg: #1a1a1a;
     --aiwu-bg-secondary: rgba(26, 26, 26, 0.6);
-    --aiwu-bg-dropdown: rgba(26, 26, 26, 0.95);
+    --aiwu-bg-surface: #252525;
     --aiwu-text: #ffffff;
     --aiwu-text-secondary: #9ca3af;
     --aiwu-text-muted: #6b7280;
     --aiwu-border: rgba(255, 255, 255, 0.1);
     --aiwu-hover-bg: rgba(255, 255, 255, 0.05);
 
-    /* Spacing */
+    /* Layout */
     --aiwu-header-height: 4rem;
-    --aiwu-container-max: 80rem;
-    --aiwu-container-padding: 1.5rem;
+    --aiwu-container-max: 1200px;
 
     /* Typography */
-    --aiwu-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    --aiwu-font-size-xs: 0.75rem;
-    --aiwu-font-size-sm: 0.875rem;
-    --aiwu-font-size-base: 1rem;
-    --aiwu-font-size-lg: 1.125rem;
-    --aiwu-font-size-xl: 1.25rem;
-    --aiwu-font-size-2xl: 1.5rem;
-    --aiwu-font-size-3xl: 1.875rem;
-    --aiwu-font-size-4xl: 2.25rem;
-    --aiwu-font-size-5xl: 3rem;
-    --aiwu-font-size-6xl: 3.75rem;
-    --aiwu-font-size-7xl: 4.5rem;
+    --aiwu-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
     /* Transitions */
-    --aiwu-transition-fast: 150ms;
-    --aiwu-transition-base: 300ms;
-    --aiwu-transition-slow: 500ms;
+    --aiwu-transition: 300ms ease;
 
     /* Border Radius */
-    --aiwu-radius-sm: 0.375rem;
-    --aiwu-radius-md: 0.5rem;
-    --aiwu-radius-lg: 0.75rem;
-    --aiwu-radius-xl: 1rem;
-    --aiwu-radius-2xl: 1.5rem;
-    --aiwu-radius-3xl: 1.875rem;
+    --aiwu-radius: 0.5rem;
+    --aiwu-radius-lg: 1rem;
     --aiwu-radius-full: 9999px;
 
     /* Shadows */
-    --aiwu-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --aiwu-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --aiwu-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --aiwu-glow: 0 0 40px rgba(255, 107, 59, 0.3);
-    --aiwu-glow-strong: 0 0 60px rgba(255, 107, 59, 0.5);
 }
 
 /* Light Theme */
 [data-theme="light"] {
     --aiwu-bg: #f9fafb;
     --aiwu-bg-secondary: rgba(255, 255, 255, 0.6);
-    --aiwu-bg-dropdown: rgba(255, 255, 255, 0.95);
+    --aiwu-bg-surface: #ffffff;
     --aiwu-text: #111827;
     --aiwu-text-secondary: #4b5563;
     --aiwu-text-muted: #6b7280;
@@ -96,32 +76,27 @@ Tags: dark-mode, light-mode, custom-colors, one-column, responsive-layout, acces
 *::before,
 *::after {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 html {
-    font-size: 16px;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
 }
 
 body {
-    font-family: var(--aiwu-font-family);
-    font-size: var(--aiwu-font-size-base);
+    margin: 0;
+    font-family: var(--aiwu-font);
+    font-size: 1rem;
     line-height: 1.6;
     color: var(--aiwu-text);
     background-color: var(--aiwu-bg);
-    transition: background-color var(--aiwu-transition-base), color var(--aiwu-transition-base);
-    min-height: 100vh;
+    transition: background-color var(--aiwu-transition), color var(--aiwu-transition);
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
     color: inherit;
     text-decoration: none;
-    transition: color var(--aiwu-transition-fast);
 }
 
 img {
@@ -135,16 +110,6 @@ button {
     cursor: pointer;
     border: none;
     background: none;
-}
-
-/* ==========================================================================
-   Layout
-   ========================================================================== */
-
-.aiwu-container {
-    max-width: var(--aiwu-container-max);
-    margin: 0 auto;
-    padding: 0 var(--aiwu-container-padding);
 }
 
 /* ==========================================================================
@@ -173,15 +138,14 @@ button {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--aiwu-border);
     border-radius: var(--aiwu-radius-full);
-    box-shadow: var(--aiwu-shadow-lg);
-    transition: background-color var(--aiwu-transition-base), border-color var(--aiwu-transition-base);
+    box-shadow: var(--aiwu-shadow);
+    transition: background-color var(--aiwu-transition), border-color var(--aiwu-transition);
 }
 
 /* Logo */
 .aiwu-logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     height: 1.5rem;
 }
 
@@ -203,173 +167,32 @@ button {
     }
 }
 
-.aiwu-nav__item {
-    position: relative;
-}
-
-.aiwu-nav__link {
-    font-size: var(--aiwu-font-size-sm);
+.aiwu-nav__link,
+.aiwu-nav .menu-item > a {
+    font-size: 0.875rem;
     color: var(--aiwu-text-secondary);
-    transition: color var(--aiwu-transition-fast);
+    transition: color 150ms;
 }
 
-.aiwu-nav__link:hover {
+.aiwu-nav__link:hover,
+.aiwu-nav .menu-item > a:hover {
     color: var(--aiwu-text);
 }
 
-/* Dropdown */
-.aiwu-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding-top: 1rem;
-    background: transparent;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--aiwu-transition-base), visibility var(--aiwu-transition-base);
-    pointer-events: none;
+/* WordPress menu reset */
+.aiwu-nav .menu-item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.aiwu-dropdown__inner {
-    background: var(--aiwu-bg-dropdown);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--aiwu-border);
-    border-radius: var(--aiwu-radius-3xl);
-    box-shadow: var(--aiwu-shadow-2xl);
-}
-
-.aiwu-nav__item:hover .aiwu-dropdown,
-.aiwu-nav__item:focus-within .aiwu-dropdown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-/* Features Dropdown */
-.aiwu-dropdown--features {
-    width: 900px;
-}
-
-.aiwu-dropdown--features .aiwu-dropdown__inner {
-    padding: 2rem;
-}
-
-.aiwu-dropdown__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.aiwu-dropdown__section {
-    padding-right: 2rem;
-    border-right: 1px solid var(--aiwu-border);
-}
-
-.aiwu-dropdown__section:last-child {
-    padding-right: 0;
-    padding-left: 2rem;
-    border-right: none;
-}
-
-.aiwu-dropdown__title {
-    font-size: var(--aiwu-font-size-xl);
-    font-weight: 500;
-    color: var(--aiwu-text);
-    margin-bottom: 0.75rem;
-}
-
-.aiwu-dropdown__desc {
-    font-size: var(--aiwu-font-size-sm);
-    color: var(--aiwu-text-secondary);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.aiwu-dropdown__links {
+.aiwu-nav ul {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.aiwu-dropdown__link {
-    display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    font-size: var(--aiwu-font-size-sm);
-    color: var(--aiwu-accent);
-    transition: color var(--aiwu-transition-fast);
-}
-
-.aiwu-dropdown__link:hover {
-    color: var(--aiwu-accent-hover);
-}
-
-.aiwu-dropdown__link svg {
-    width: 14px;
-    height: 14px;
-    transition: transform var(--aiwu-transition-fast);
-}
-
-.aiwu-dropdown__link:hover svg {
-    transform: translateX(2px);
-}
-
-/* Apps Grid */
-.aiwu-apps-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-}
-
-.aiwu-app-item {
-    padding: 0.75rem;
-    border-radius: var(--aiwu-radius-xl);
-    transition: background-color var(--aiwu-transition-fast);
-}
-
-.aiwu-app-item:hover {
-    background: var(--aiwu-hover-bg);
-}
-
-.aiwu-app-item__title {
-    font-size: var(--aiwu-font-size-sm);
-    color: var(--aiwu-text);
-    margin-bottom: 0.25rem;
-}
-
-.aiwu-app-item__desc {
-    font-size: var(--aiwu-font-size-xs);
-    color: var(--aiwu-text-muted);
-}
-
-/* Resources Dropdown */
-.aiwu-dropdown--resources {
-    width: 400px;
-}
-
-.aiwu-dropdown--resources .aiwu-dropdown__inner {
-    padding: 1.5rem;
-}
-
-.aiwu-dropdown__list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.aiwu-dropdown__list-item {
-    display: block;
-    padding: 0.75rem 1rem;
-    font-size: var(--aiwu-font-size-sm);
-    color: var(--aiwu-text);
-    border-radius: var(--aiwu-radius-lg);
-    transition: background-color var(--aiwu-transition-fast);
-}
-
-.aiwu-dropdown__list-item:hover {
-    background: var(--aiwu-hover-bg);
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 /* Header Actions */
@@ -382,7 +205,7 @@ button {
 .aiwu-theme-toggle {
     padding: 0.5rem;
     color: var(--aiwu-text-secondary);
-    transition: color var(--aiwu-transition-fast);
+    transition: color 150ms;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -415,9 +238,9 @@ button {
 
 .aiwu-login-link {
     display: none;
-    font-size: var(--aiwu-font-size-sm);
+    font-size: 0.875rem;
     color: var(--aiwu-text-secondary);
-    transition: color var(--aiwu-transition-fast);
+    transition: color 150ms;
 }
 
 .aiwu-login-link:hover {
@@ -433,13 +256,12 @@ button {
 .aiwu-btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 0.5rem;
     padding: 0.5rem 1.25rem;
-    font-size: var(--aiwu-font-size-sm);
+    font-size: 0.875rem;
     font-weight: 500;
     border-radius: var(--aiwu-radius-full);
-    transition: all var(--aiwu-transition-fast);
+    transition: all 150ms;
 }
 
 .aiwu-btn--primary {
@@ -451,32 +273,16 @@ button {
     background: var(--aiwu-accent-hover);
 }
 
-.aiwu-btn--gradient {
-    background: linear-gradient(to right, var(--aiwu-accent), var(--aiwu-accent-light));
-    color: #ffffff;
-    box-shadow: var(--aiwu-glow);
-}
-
-.aiwu-btn--gradient:hover {
-    transform: scale(1.05);
-    box-shadow: var(--aiwu-glow-strong);
-}
-
-.aiwu-btn svg {
-    width: 18px;
-    height: 18px;
-    transition: transform var(--aiwu-transition-fast);
-}
-
-.aiwu-btn:hover svg {
-    transform: translateX(4px);
-}
-
 /* Mobile Menu Toggle */
 .aiwu-mobile-toggle {
     display: flex;
     padding: 0.5rem;
     color: var(--aiwu-text-secondary);
+}
+
+.aiwu-mobile-toggle svg {
+    width: 24px;
+    height: 24px;
 }
 
 @media (min-width: 768px) {
@@ -485,175 +291,57 @@ button {
     }
 }
 
-/* ==========================================================================
-   Hero Section
-   ========================================================================== */
-
-.aiwu-hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6rem 1.5rem 4rem;
-    overflow: hidden;
-}
-
-/* Animated Grid Background */
-.aiwu-hero__grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(255, 107, 59, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 107, 59, 0.03) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent);
-    -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent);
-    transition: opacity var(--aiwu-transition-base);
-}
-
-[data-theme="light"] .aiwu-hero__grid {
-    opacity: 0.5;
-}
-
-.aiwu-hero__content {
-    position: relative;
-    max-width: 64rem;
-    margin: 0 auto;
-    text-align: center;
-    z-index: 10;
-}
-
-/* Badge */
-.aiwu-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: var(--aiwu-radius-full);
-    background: linear-gradient(to right, rgba(255, 107, 59, 0.1), rgba(255, 107, 59, 0.05));
-    border: 1px solid rgba(255, 107, 59, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    margin-bottom: 2rem;
-}
-
-.aiwu-badge svg {
-    width: 14px;
-    height: 14px;
-    color: var(--aiwu-accent);
-}
-
-.aiwu-badge__text {
-    font-size: var(--aiwu-font-size-sm);
-    color: var(--aiwu-text-secondary);
-}
-
-/* Hero Title */
-.aiwu-hero__title {
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-}
-
-.aiwu-hero__title-line {
-    display: block;
-    font-size: var(--aiwu-font-size-5xl);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
-}
-
-@media (min-width: 768px) {
-    .aiwu-hero__title-line {
-        font-size: var(--aiwu-font-size-6xl);
-    }
-}
-
-@media (min-width: 1024px) {
-    .aiwu-hero__title-line {
-        font-size: var(--aiwu-font-size-7xl);
-    }
-}
-
-.aiwu-hero__title-gradient {
-    background: linear-gradient(to right, var(--aiwu-accent), var(--aiwu-accent-light), var(--aiwu-accent-lighter));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-/* Hero Subtitle */
-.aiwu-hero__subtitle {
-    font-size: var(--aiwu-font-size-lg);
-    color: var(--aiwu-text-secondary);
-    max-width: 42rem;
-    margin: 0 auto 2.5rem;
-    line-height: 1.7;
-}
-
-@media (min-width: 768px) {
-    .aiwu-hero__subtitle {
-        font-size: var(--aiwu-font-size-xl);
-    }
-}
-
-/* Hero CTA */
-.aiwu-hero__cta {
-    display: flex;
-    justify-content: center;
-}
-
-.aiwu-hero__cta .aiwu-btn {
-    padding: 0.875rem 1.75rem;
-}
-
-/* ==========================================================================
-   Animations
-   ========================================================================== */
-
-/* Fade In Up Animation */
-@keyframes aiwu-fade-in-up {
-    from {
+/* Mobile Nav */
+@media (max-width: 767px) {
+    .aiwu-nav {
+        position: fixed;
+        top: 5.5rem;
+        left: 1.5rem;
+        right: 1.5rem;
+        flex-direction: column;
+        padding: 1.5rem;
+        background: var(--aiwu-bg-surface);
+        backdrop-filter: blur(24px);
+        border: 1px solid var(--aiwu-border);
+        border-radius: var(--aiwu-radius-lg);
+        box-shadow: var(--aiwu-shadow);
         opacity: 0;
-        transform: translateY(20px);
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all var(--aiwu-transition);
     }
-    to {
+
+    .aiwu-nav.is-open {
+        display: flex;
         opacity: 1;
+        visibility: visible;
         transform: translateY(0);
     }
-}
 
-.aiwu-animate {
-    opacity: 0;
-    animation: aiwu-fade-in-up 0.8s ease-out forwards;
-}
-
-.aiwu-animate--delay-1 {
-    animation-delay: 0.2s;
-}
-
-.aiwu-animate--delay-2 {
-    animation-delay: 0.4s;
-}
-
-.aiwu-animate--delay-3 {
-    animation-delay: 0.6s;
-}
-
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .aiwu-nav__link,
+    .aiwu-nav .menu-item > a {
+        display: block;
+        padding: 0.75rem 0;
+        font-size: 1rem;
     }
 
-    .aiwu-animate {
-        opacity: 1;
-        animation: none;
+    .aiwu-nav ul {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
     }
+
+    .aiwu-nav .menu-item {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+
+.aiwu-main {
+    padding-top: 6rem;
 }
 
 /* ==========================================================================
@@ -661,10 +349,10 @@ button {
    ========================================================================== */
 
 .aiwu-footer {
-    padding: 2rem 0;
+    padding: 3rem 1.5rem;
     text-align: center;
     color: var(--aiwu-text-muted);
-    font-size: var(--aiwu-font-size-sm);
+    font-size: 0.875rem;
 }
 
 /* ==========================================================================
@@ -688,7 +376,6 @@ button {
     outline-offset: 2px;
 }
 
-/* Skip to content link */
 .skip-link {
     position: absolute;
     top: -100%;
@@ -697,9 +384,9 @@ button {
     background: var(--aiwu-accent);
     color: #ffffff;
     padding: 0.75rem 1.5rem;
-    border-radius: var(--aiwu-radius-md);
+    border-radius: var(--aiwu-radius);
     z-index: 100;
-    transition: top var(--aiwu-transition-fast);
+    transition: top 150ms;
 }
 
 .skip-link:focus {
@@ -707,133 +394,14 @@ button {
 }
 
 /* ==========================================================================
-   Utility Classes
+   Reduced Motion
    ========================================================================== */
 
-.text-accent {
-    color: var(--aiwu-accent);
-}
-
-.bg-accent {
-    background-color: var(--aiwu-accent);
-}
-
-/* ==========================================================================
-   Mobile Navigation
-   ========================================================================== */
-
-@media (max-width: 767px) {
-    .aiwu-nav {
-        position: fixed;
-        top: 5.5rem;
-        left: 1.5rem;
-        right: 1.5rem;
-        bottom: 1.5rem;
-        flex-direction: column;
-        padding: 1.5rem;
-        background: var(--aiwu-bg-dropdown);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid var(--aiwu-border);
-        border-radius: var(--aiwu-radius-2xl);
-        box-shadow: var(--aiwu-shadow-2xl);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity var(--aiwu-transition-base),
-                    visibility var(--aiwu-transition-base),
-                    transform var(--aiwu-transition-base);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
-
-    .aiwu-nav.is-open {
-        display: flex;
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    .aiwu-nav__item {
-        width: 100%;
-    }
-
-    .aiwu-nav__link {
-        display: block;
-        padding: 0.75rem 0;
-        font-size: var(--aiwu-font-size-base);
-    }
-
-    .aiwu-dropdown {
-        position: static;
-        transform: none;
-        width: 100%;
-        padding-top: 0;
-        opacity: 0;
-        visibility: hidden;
-        max-height: 0;
-        overflow: hidden;
-        transition: opacity var(--aiwu-transition-base),
-                    visibility var(--aiwu-transition-base),
-                    max-height var(--aiwu-transition-base);
-    }
-
-    .aiwu-nav__item.is-open .aiwu-dropdown {
-        opacity: 1;
-        visibility: visible;
-        max-height: 1000px;
-        pointer-events: auto;
-    }
-
-    .aiwu-dropdown__inner {
-        border-radius: var(--aiwu-radius-xl);
-        margin-top: 0.5rem;
-    }
-
-    .aiwu-dropdown--features,
-    .aiwu-dropdown--resources {
-        width: 100%;
-    }
-
-    .aiwu-dropdown--features .aiwu-dropdown__inner,
-    .aiwu-dropdown--resources .aiwu-dropdown__inner {
-        padding: 1rem;
-    }
-
-    .aiwu-dropdown__grid {
-        grid-template-columns: 1fr;
-    }
-
-    .aiwu-dropdown__section {
-        padding-right: 0;
-        border-right: none;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid var(--aiwu-border);
-    }
-
-    .aiwu-dropdown__section:last-child {
-        padding-left: 0;
-        padding-bottom: 0;
-        border-bottom: none;
-        padding-top: 1.5rem;
-    }
-
-    .aiwu-apps-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ==========================================================================
-   Keyboard Navigation States
-   ========================================================================== */
-
-.aiwu-nav__item.is-focused .aiwu-dropdown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-/* Header scrolled state */
-.aiwu-header.is-scrolled .aiwu-header__inner {
-    background: var(--aiwu-bg-dropdown);
 }

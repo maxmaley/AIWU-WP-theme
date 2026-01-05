@@ -1,8 +1,6 @@
 <?php
 /**
- * The front page template
- *
- * Displays content created with Block Patterns in Gutenberg.
+ * The template for displaying pages
  *
  * @package AIWU
  * @since 1.0.0

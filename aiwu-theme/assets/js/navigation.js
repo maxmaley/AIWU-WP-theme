@@ -1,7 +1,7 @@
 /**
  * AIWU Navigation
  *
- * Handles mobile menu toggle and dropdown accessibility
+ * Handles mobile menu toggle and navigation functionality
  *
  * @package AIWU
  * @since 1.0.0
@@ -46,118 +46,15 @@
                 toggle.focus();
             }
         });
-    }
 
-    /**
-     * Check if mobile viewport
-     */
-    function isMobile() {
-        return window.innerWidth < 768;
-    }
-
-    /**
-     * Dropdown Accessibility
-     * Adds keyboard navigation for dropdown menus
-     */
-    function initDropdownAccessibility() {
-        const navItems = document.querySelectorAll('.aiwu-nav__item');
-
-        navItems.forEach(function(item) {
-            const link = item.querySelector('.aiwu-nav__link');
-            const dropdown = item.querySelector('.aiwu-dropdown');
-
-            if (!link || !dropdown) {
-                return;
-            }
-
-            // Handle click for mobile toggle
-            link.addEventListener('click', function(e) {
-                if (isMobile()) {
-                    e.preventDefault();
-                    const isOpen = item.classList.contains('is-open');
-
-                    // Close other dropdowns on mobile
-                    document.querySelectorAll('.aiwu-nav__item.is-open').forEach(function(openItem) {
-                        if (openItem !== item) {
-                            openItem.classList.remove('is-open');
-                        }
-                    });
-
-                    item.classList.toggle('is-open');
-                }
-            });
-
-            // Show dropdown on focus (desktop)
-            link.addEventListener('focus', function() {
-                if (!isMobile()) {
-                    closeAllDropdowns();
-                    item.classList.add('is-focused');
-                }
-            });
-
-            // Handle keyboard navigation
-            link.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    const isOpen = item.classList.contains('is-focused') || item.classList.contains('is-open');
-                    closeAllDropdowns();
-
-                    if (!isOpen) {
-                        if (isMobile()) {
-                            item.classList.add('is-open');
-                        } else {
-                            item.classList.add('is-focused');
-                        }
-                        const firstLink = dropdown.querySelector('a');
-                        if (firstLink) {
-                            firstLink.focus();
-                        }
-                    }
-                }
-
-                if (e.key === 'Escape') {
-                    item.classList.remove('is-focused');
-                    item.classList.remove('is-open');
-                    link.focus();
-                }
-            });
-
-            // Handle dropdown link keyboard navigation
-            const dropdownLinks = dropdown.querySelectorAll('a');
-            dropdownLinks.forEach(function(dropdownLink, index) {
-                dropdownLink.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') {
-                        item.classList.remove('is-focused');
-                        item.classList.remove('is-open');
-                        link.focus();
-                    }
-
-                    if (e.key === 'Tab' && !e.shiftKey && index === dropdownLinks.length - 1) {
-                        item.classList.remove('is-focused');
-                    }
-
-                    if (e.key === 'Tab' && e.shiftKey && index === 0) {
-                        item.classList.remove('is-focused');
-                    }
-                });
-            });
-        });
-
-        // Close dropdowns when clicking outside
+        // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.aiwu-nav__item')) {
-                closeAllDropdowns();
+            if (nav.classList.contains('is-open') &&
+                !e.target.closest('.aiwu-nav') &&
+                !e.target.closest('[data-mobile-toggle]')) {
+                toggle.setAttribute('aria-expanded', 'false');
+                nav.classList.remove('is-open');
             }
-        });
-    }
-
-    /**
-     * Close all dropdowns
-     */
-    function closeAllDropdowns() {
-        document.querySelectorAll('.aiwu-nav__item.is-focused, .aiwu-nav__item.is-open').forEach(function(item) {
-            item.classList.remove('is-focused');
-            item.classList.remove('is-open');
         });
     }
 
@@ -177,6 +74,17 @@
                 const target = document.querySelector(targetId);
                 if (target) {
                     e.preventDefault();
+
+                    // Close mobile menu if open
+                    const nav = document.querySelector('.aiwu-nav');
+                    const toggle = document.querySelector('[data-mobile-toggle]');
+                    if (nav && nav.classList.contains('is-open')) {
+                        nav.classList.remove('is-open');
+                        if (toggle) {
+                            toggle.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
@@ -199,7 +107,6 @@
             return;
         }
 
-        let lastScroll = 0;
         const scrollThreshold = 100;
 
         window.addEventListener('scroll', function() {
@@ -210,8 +117,6 @@
             } else {
                 header.classList.remove('is-scrolled');
             }
-
-            lastScroll = currentScroll;
         }, { passive: true });
     }
 
@@ -220,7 +125,6 @@
      */
     function init() {
         initMobileMenu();
-        initDropdownAccessibility();
         initSmoothScroll();
         initHeaderScroll();
     }

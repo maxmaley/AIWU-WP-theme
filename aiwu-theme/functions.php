@@ -44,6 +44,13 @@ function aiwu_theme_setup() {
     // Add support for responsive embedded content
     add_theme_support( 'responsive-embeds' );
 
+    // Add support for editor styles
+    add_theme_support( 'editor-styles' );
+    add_editor_style( 'assets/css/editor.css' );
+
+    // Add support for wide and full-width blocks
+    add_theme_support( 'align-wide' );
+
     // Add support for custom logo
     add_theme_support( 'custom-logo', array(
         'height'      => 43,
@@ -57,8 +64,33 @@ function aiwu_theme_setup() {
         'primary' => esc_html__( 'Primary Menu', 'aiwu' ),
         'footer'  => esc_html__( 'Footer Menu', 'aiwu' ),
     ) );
+
+    // Register block pattern category
+    register_block_pattern_category( 'aiwu', array(
+        'label' => esc_html__( 'AIWU', 'aiwu' ),
+    ) );
 }
 add_action( 'after_setup_theme', 'aiwu_theme_setup' );
+
+/**
+ * Register block patterns
+ */
+function aiwu_register_block_patterns() {
+    $patterns = array(
+        'hero',
+        'features-grid',
+        'cta-section',
+        'two-columns',
+    );
+
+    foreach ( $patterns as $pattern ) {
+        $pattern_file = AIWU_THEME_DIR . '/patterns/' . $pattern . '.php';
+        if ( file_exists( $pattern_file ) ) {
+            require_once $pattern_file;
+        }
+    }
+}
+add_action( 'init', 'aiwu_register_block_patterns' );
 
 /**
  * Enqueue scripts and styles
@@ -69,6 +101,14 @@ function aiwu_enqueue_assets() {
         'aiwu-style',
         get_stylesheet_uri(),
         array(),
+        AIWU_THEME_VERSION
+    );
+
+    // Block styles
+    wp_enqueue_style(
+        'aiwu-blocks',
+        AIWU_THEME_URI . '/assets/css/blocks.css',
+        array( 'aiwu-style' ),
         AIWU_THEME_VERSION
     );
 
@@ -93,15 +133,17 @@ function aiwu_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'aiwu_enqueue_assets' );
 
 /**
- * Add preload for critical assets
+ * Enqueue editor styles
  */
-function aiwu_preload_assets() {
-    ?>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <?php
+function aiwu_enqueue_editor_assets() {
+    wp_enqueue_style(
+        'aiwu-editor',
+        AIWU_THEME_URI . '/assets/css/editor.css',
+        array(),
+        AIWU_THEME_VERSION
+    );
 }
-add_action( 'wp_head', 'aiwu_preload_assets', 1 );
+add_action( 'enqueue_block_editor_assets', 'aiwu_enqueue_editor_assets' );
 
 /**
  * Add inline script for theme toggle (before page loads to prevent flash)
@@ -119,15 +161,10 @@ function aiwu_theme_toggle_inline_script() {
 add_action( 'wp_head', 'aiwu_theme_toggle_inline_script', 0 );
 
 /**
- * Custom template tags
- */
-
-/**
  * Get AIWU Logo SVG
  */
 function aiwu_get_logo_svg() {
-    return '
-    <svg fill="none" viewBox="0 0 125 43" xmlns="http://www.w3.org/2000/svg">
+    return '<svg fill="none" viewBox="0 0 125 43" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="aiwu-gradient-orange" x1="31.4815" x2="31.4815" y1="0" y2="50.8182" gradientUnits="userSpaceOnUse">
                 <stop stop-color="#FF6B3B"/>
@@ -147,23 +184,16 @@ function aiwu_get_logo_svg() {
 /**
  * Get icon SVG
  *
- * @param string $icon Icon name
- * @return string SVG markup
+ * @param string $icon Icon name.
+ * @return string SVG markup.
  */
 function aiwu_get_icon( $icon ) {
     $icons = array(
-        'sun' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
-
-        'moon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>',
-
-        'arrow-right' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
-
-        'sparkles' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>',
-
-        'menu' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>',
-
-        'x' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
-
+        'sun'          => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
+        'moon'         => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>',
+        'arrow-right'  => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+        'menu'         => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>',
+        'x'            => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
         'chevron-down' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
     );
 
@@ -171,31 +201,20 @@ function aiwu_get_icon( $icon ) {
 }
 
 /**
- * Clean up WordPress head
+ * Clean up WordPress head for performance
  */
 function aiwu_cleanup_head() {
-    // Remove WP version
     remove_action( 'wp_head', 'wp_generator' );
-
-    // Remove wlwmanifest link
     remove_action( 'wp_head', 'wlwmanifest_link' );
-
-    // Remove RSD link
     remove_action( 'wp_head', 'rsd_link' );
-
-    // Remove shortlink
     remove_action( 'wp_head', 'wp_shortlink_wp_head' );
-
-    // Remove REST API link
     remove_action( 'wp_head', 'rest_output_link_wp_head' );
-
-    // Remove oEmbed discovery links
     remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
 }
 add_action( 'init', 'aiwu_cleanup_head' );
 
 /**
- * Disable emojis
+ * Disable emojis for performance
  */
 function aiwu_disable_emojis() {
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
@@ -227,7 +246,7 @@ add_action( 'wp_default_scripts', 'aiwu_remove_jquery_migrate' );
 function aiwu_defer_scripts( $tag, $handle, $src ) {
     $defer_scripts = array( 'aiwu-navigation' );
 
-    if ( in_array( $handle, $defer_scripts ) ) {
+    if ( in_array( $handle, $defer_scripts, true ) ) {
         return '<script src="' . esc_url( $src ) . '" defer></script>';
     }
 
@@ -236,24 +255,74 @@ function aiwu_defer_scripts( $tag, $handle, $src ) {
 add_filter( 'script_loader_tag', 'aiwu_defer_scripts', 10, 3 );
 
 /**
- * Add schema.org structured data
+ * Add schema.org structured data for SEO
  */
 function aiwu_add_schema_markup() {
     if ( is_front_page() ) {
         $schema = array(
-            '@context' => 'https://schema.org',
-            '@type'    => 'SoftwareApplication',
-            'name'     => 'AIWU - AI WordPress Automation',
+            '@context'            => 'https://schema.org',
+            '@type'               => 'SoftwareApplication',
+            'name'                => 'AIWU - AI WordPress Automation',
             'applicationCategory' => 'BusinessApplication',
-            'operatingSystem' => 'WordPress',
-            'offers' => array(
-                '@type' => 'Offer',
-                'price' => '0',
+            'operatingSystem'     => 'WordPress',
+            'offers'              => array(
+                '@type'         => 'Offer',
+                'price'         => '0',
                 'priceCurrency' => 'USD',
             ),
         );
+        echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ) . '</script>';
+    }
 
+    if ( is_singular( 'post' ) ) {
+        $schema = array(
+            '@context'      => 'https://schema.org',
+            '@type'         => 'Article',
+            'headline'      => get_the_title(),
+            'datePublished' => get_the_date( 'c' ),
+            'dateModified'  => get_the_modified_date( 'c' ),
+            'author'        => array(
+                '@type' => 'Person',
+                'name'  => get_the_author(),
+            ),
+        );
         echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ) . '</script>';
     }
 }
 add_action( 'wp_head', 'aiwu_add_schema_markup' );
+
+/**
+ * Custom excerpt length
+ */
+function aiwu_excerpt_length( $length ) {
+    return 20;
+}
+add_filter( 'excerpt_length', 'aiwu_excerpt_length' );
+
+/**
+ * Custom excerpt more
+ */
+function aiwu_excerpt_more( $more ) {
+    return '&hellip;';
+}
+add_filter( 'excerpt_more', 'aiwu_excerpt_more' );
+
+/**
+ * Fallback menu when no menu is assigned
+ */
+function aiwu_fallback_menu() {
+    $links = array(
+        'Features' => '#features',
+        'Pricing'  => '#pricing',
+        'Blog'     => get_permalink( get_option( 'page_for_posts' ) ),
+        'Contact'  => '#contact',
+    );
+
+    foreach ( $links as $label => $url ) {
+        printf(
+            '<a href="%s" class="aiwu-nav__link">%s</a>',
+            esc_url( $url ),
+            esc_html( $label )
+        );
+    }
+}
