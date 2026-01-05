@@ -49,6 +49,13 @@
     }
 
     /**
+     * Check if mobile viewport
+     */
+    function isMobile() {
+        return window.innerWidth < 768;
+    }
+
+    /**
      * Dropdown Accessibility
      * Adds keyboard navigation for dropdown menus
      */
@@ -63,21 +70,44 @@
                 return;
             }
 
-            // Show dropdown on focus
+            // Handle click for mobile toggle
+            link.addEventListener('click', function(e) {
+                if (isMobile()) {
+                    e.preventDefault();
+                    const isOpen = item.classList.contains('is-open');
+
+                    // Close other dropdowns on mobile
+                    document.querySelectorAll('.aiwu-nav__item.is-open').forEach(function(openItem) {
+                        if (openItem !== item) {
+                            openItem.classList.remove('is-open');
+                        }
+                    });
+
+                    item.classList.toggle('is-open');
+                }
+            });
+
+            // Show dropdown on focus (desktop)
             link.addEventListener('focus', function() {
-                closeAllDropdowns();
-                item.classList.add('is-focused');
+                if (!isMobile()) {
+                    closeAllDropdowns();
+                    item.classList.add('is-focused');
+                }
             });
 
             // Handle keyboard navigation
             link.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    const isOpen = item.classList.contains('is-focused');
+                    const isOpen = item.classList.contains('is-focused') || item.classList.contains('is-open');
                     closeAllDropdowns();
 
                     if (!isOpen) {
-                        item.classList.add('is-focused');
+                        if (isMobile()) {
+                            item.classList.add('is-open');
+                        } else {
+                            item.classList.add('is-focused');
+                        }
                         const firstLink = dropdown.querySelector('a');
                         if (firstLink) {
                             firstLink.focus();
@@ -87,6 +117,7 @@
 
                 if (e.key === 'Escape') {
                     item.classList.remove('is-focused');
+                    item.classList.remove('is-open');
                     link.focus();
                 }
             });
@@ -97,6 +128,7 @@
                 dropdownLink.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') {
                         item.classList.remove('is-focused');
+                        item.classList.remove('is-open');
                         link.focus();
                     }
 
@@ -123,8 +155,9 @@
      * Close all dropdowns
      */
     function closeAllDropdowns() {
-        document.querySelectorAll('.aiwu-nav__item.is-focused').forEach(function(item) {
+        document.querySelectorAll('.aiwu-nav__item.is-focused, .aiwu-nav__item.is-open').forEach(function(item) {
             item.classList.remove('is-focused');
+            item.classList.remove('is-open');
         });
     }
 

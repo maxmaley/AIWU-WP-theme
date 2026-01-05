@@ -44,11 +44,13 @@ $resources = array(
 ?>
 
 <div class="aiwu-dropdown aiwu-dropdown--resources" role="menu">
-    <div class="aiwu-dropdown__list">
-        <?php foreach ( $resources as $resource ) : ?>
-            <a href="<?php echo esc_url( $resource['link'] ); ?>" class="aiwu-dropdown__list-item" role="menuitem">
-                <?php echo esc_html( $resource['title'] ); ?>
-            </a>
-        <?php endforeach; ?>
+    <div class="aiwu-dropdown__inner">
+        <div class="aiwu-dropdown__list">
+            <?php foreach ( $resources as $resource ) : ?>
+                <a href="<?php echo esc_url( $resource['link'] ); ?>" class="aiwu-dropdown__list-item" role="menuitem">
+                    <?php echo esc_html( $resource['title'] ); ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>

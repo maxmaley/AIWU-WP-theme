@@ -223,17 +223,21 @@ button {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 1.5rem;
+    padding-top: 1rem;
+    background: transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--aiwu-transition-base), visibility var(--aiwu-transition-base);
+    pointer-events: none;
+}
+
+.aiwu-dropdown__inner {
     background: var(--aiwu-bg-dropdown);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--aiwu-border);
     border-radius: var(--aiwu-radius-3xl);
     box-shadow: var(--aiwu-shadow-2xl);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--aiwu-transition-base), visibility var(--aiwu-transition-base);
-    pointer-events: none;
 }
 
 .aiwu-nav__item:hover .aiwu-dropdown,
@@ -246,6 +250,9 @@ button {
 /* Features Dropdown */
 .aiwu-dropdown--features {
     width: 900px;
+}
+
+.aiwu-dropdown--features .aiwu-dropdown__inner {
     padding: 2rem;
 }
 
@@ -340,6 +347,9 @@ button {
 /* Resources Dropdown */
 .aiwu-dropdown--resources {
     width: 400px;
+}
+
+.aiwu-dropdown--resources .aiwu-dropdown__inner {
     padding: 1.5rem;
 }
 
@@ -718,6 +728,7 @@ button {
         top: 5.5rem;
         left: 1.5rem;
         right: 1.5rem;
+        bottom: 1.5rem;
         flex-direction: column;
         padding: 1.5rem;
         background: var(--aiwu-bg-dropdown);
@@ -732,6 +743,8 @@ button {
         transition: opacity var(--aiwu-transition-base),
                     visibility var(--aiwu-transition-base),
                     transform var(--aiwu-transition-base);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .aiwu-nav.is-open {
@@ -739,6 +752,10 @@ button {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+    }
+
+    .aiwu-nav__item {
+        width: 100%;
     }
 
     .aiwu-nav__link {
@@ -751,16 +768,36 @@ button {
         position: static;
         transform: none;
         width: 100%;
-        margin-top: 0.5rem;
-        padding: 1rem;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        border-radius: var(--aiwu-radius-xl);
+        padding-top: 0;
+        opacity: 0;
+        visibility: hidden;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity var(--aiwu-transition-base),
+                    visibility var(--aiwu-transition-base),
+                    max-height var(--aiwu-transition-base);
     }
 
-    .aiwu-dropdown--features {
+    .aiwu-nav__item.is-open .aiwu-dropdown {
+        opacity: 1;
+        visibility: visible;
+        max-height: 1000px;
+        pointer-events: auto;
+    }
+
+    .aiwu-dropdown__inner {
+        border-radius: var(--aiwu-radius-xl);
+        margin-top: 0.5rem;
+    }
+
+    .aiwu-dropdown--features,
+    .aiwu-dropdown--resources {
         width: 100%;
+    }
+
+    .aiwu-dropdown--features .aiwu-dropdown__inner,
+    .aiwu-dropdown--resources .aiwu-dropdown__inner {
+        padding: 1rem;
     }
 
     .aiwu-dropdown__grid {

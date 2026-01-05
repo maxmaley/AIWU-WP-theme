@@ -56,6 +56,7 @@ $apps = array(
 ?>
 
 <div class="aiwu-dropdown aiwu-dropdown--features" role="menu">
+    <div class="aiwu-dropdown__inner">
     <div class="aiwu-dropdown__grid">
         <!-- Left Side - Workflow Builder -->
         <div class="aiwu-dropdown__section">
@@ -103,5 +104,6 @@ $apps = array(
                 <?php endforeach; ?>
             </div>
         </div>
+    </div>
     </div>
 </div>
