@@ -337,6 +337,122 @@ button {
 }
 
 /* ==========================================================================
+   Hero Section
+   ========================================================================== */
+
+.aiwu-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 1.5rem 4rem;
+    overflow: hidden;
+}
+
+/* Hero Background */
+.aiwu-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.aiwu-hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+}
+
+[data-theme="light"] .aiwu-hero__grid {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+.aiwu-hero__glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(255, 107, 59, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+[data-theme="light"] .aiwu-hero__glow {
+    background: radial-gradient(ellipse, rgba(255, 107, 59, 0.1) 0%, transparent 70%);
+}
+
+/* Hero Content */
+.aiwu-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Badge */
+.aiwu-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--aiwu-text-secondary);
+    background: var(--aiwu-hover-bg);
+    border: 1px solid var(--aiwu-border);
+    border-radius: var(--aiwu-radius-full);
+}
+
+/* Title */
+.aiwu-hero__title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.aiwu-gradient-text {
+    background: linear-gradient(135deg, var(--aiwu-accent) 0%, var(--aiwu-accent-lighter) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Subtitle */
+.aiwu-hero__subtitle {
+    margin: 0 0 2.5rem;
+    font-size: 1.25rem;
+    color: var(--aiwu-text-secondary);
+    line-height: 1.6;
+}
+
+/* CTA */
+.aiwu-hero__cta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.aiwu-btn--large {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+}
+
+.aiwu-btn--large svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ==========================================================================
    Main Content
    ========================================================================== */
 

@@ -44,10 +44,6 @@ function aiwu_theme_setup() {
     // Add support for responsive embedded content
     add_theme_support( 'responsive-embeds' );
 
-    // Add support for editor styles
-    add_theme_support( 'editor-styles' );
-    add_editor_style( 'assets/css/editor.css' );
-
     // Add support for wide and full-width blocks
     add_theme_support( 'align-wide' );
 
@@ -65,32 +61,8 @@ function aiwu_theme_setup() {
         'footer'  => esc_html__( 'Footer Menu', 'aiwu' ),
     ) );
 
-    // Register block pattern category
-    register_block_pattern_category( 'aiwu', array(
-        'label' => esc_html__( 'AIWU', 'aiwu' ),
-    ) );
 }
 add_action( 'after_setup_theme', 'aiwu_theme_setup' );
-
-/**
- * Register block patterns
- */
-function aiwu_register_block_patterns() {
-    $patterns = array(
-        'hero',
-        'features-grid',
-        'cta-section',
-        'two-columns',
-    );
-
-    foreach ( $patterns as $pattern ) {
-        $pattern_file = AIWU_THEME_DIR . '/patterns/' . $pattern . '.php';
-        if ( file_exists( $pattern_file ) ) {
-            require_once $pattern_file;
-        }
-    }
-}
-add_action( 'init', 'aiwu_register_block_patterns' );
 
 /**
  * Enqueue scripts and styles
@@ -101,14 +73,6 @@ function aiwu_enqueue_assets() {
         'aiwu-style',
         get_stylesheet_uri(),
         array(),
-        AIWU_THEME_VERSION
-    );
-
-    // Block styles
-    wp_enqueue_style(
-        'aiwu-blocks',
-        AIWU_THEME_URI . '/assets/css/blocks.css',
-        array( 'aiwu-style' ),
         AIWU_THEME_VERSION
     );
 
@@ -131,19 +95,6 @@ function aiwu_enqueue_assets() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'aiwu_enqueue_assets' );
-
-/**
- * Enqueue editor styles
- */
-function aiwu_enqueue_editor_assets() {
-    wp_enqueue_style(
-        'aiwu-editor',
-        AIWU_THEME_URI . '/assets/css/editor.css',
-        array(),
-        AIWU_THEME_VERSION
-    );
-}
-add_action( 'enqueue_block_editor_assets', 'aiwu_enqueue_editor_assets' );
 
 /**
  * Add inline script for theme toggle (before page loads to prevent flash)
@@ -290,22 +241,6 @@ function aiwu_add_schema_markup() {
     }
 }
 add_action( 'wp_head', 'aiwu_add_schema_markup' );
-
-/**
- * Custom excerpt length
- */
-function aiwu_excerpt_length( $length ) {
-    return 20;
-}
-add_filter( 'excerpt_length', 'aiwu_excerpt_length' );
-
-/**
- * Custom excerpt more
- */
-function aiwu_excerpt_more( $more ) {
-    return '&hellip;';
-}
-add_filter( 'excerpt_more', 'aiwu_excerpt_more' );
 
 /**
  * Fallback menu when no menu is assigned

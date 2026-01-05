@@ -2,19 +2,12 @@
 /**
  * The front page template
  *
- * Displays content created with Block Patterns in Gutenberg.
- *
  * @package AIWU
  * @since 1.0.0
  */
 
 get_header();
 
-if ( have_posts() ) :
-    while ( have_posts() ) :
-        the_post();
-        the_content();
-    endwhile;
-endif;
+get_template_part( 'template-parts/hero/hero' );
 
 get_footer();
